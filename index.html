@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Love</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet">
+    
+    <!-- Canvas Confetti Library for the Confetti Button -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        /* --- Base & Responsive Variables --- */
+        :root {
+            --primary-color: #ffb6c1;
+            --accent-color: #d1495b;
+            --bg-color: #fffaf0;
+            --text-dark: #333;
+            --text-light: #666;
+        }
+
+        * { box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth; /* Smooth scrolling navigation */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--accent-color);
+        }
+
+        /* --- Loading Screen --- */
+        #loader {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: var(--bg-color);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--accent-color);
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        /* --- Floating Hearts Background --- */
+        .hearts-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 10; 
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute; bottom: -20px;
+            color: rgba(209, 73, 91, 0.4);
+            font-size: 20px;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Scroll Reveal Setup --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1; transform: translateY(0);
+        }
+
+        /* --- SECTION 1: Softly Connected Photo --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-photo-banner {
+            width: 100%;
+            height: 70vh; 
+            background: 
+                linear-gradient(to bottom, rgba(255,250,240,0) 50%, var(--bg-color) 100%),
+                url('Jana/IMG_1977.JPG') no-repeat center center / cover;
+        }
+
+        .hero-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 20px;
+            text-align: center;
+            margin-top: -20px; 
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-text h1 { font-size: 4.5rem; margin: 0; line-height: 1.2; }
+        .hero-text p { font-size: 1.15rem; color: var(--text-light); line-height: 1.7; margin-top: 15px; }
+
+        /* --- Time Together Counter --- */
+        .counter-container {
+            margin-top: 20px;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(209, 73, 91, 0.15);
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Bouncing Scroll Arrow */
+        .scroll-down {
+            margin-top: 30px;
+            color: var(--accent-color);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        /* --- SECTIONS: Outing Layout --- */
+        .outing {
+            padding: 80px 20px; max-width: 1100px; margin: 0 auto;
+            position: relative; z-index: 1; border-radius: 20px;
+            border-bottom: 2px dashed #ffb6c1;
+            transition: background-color 1s ease, box-shadow 1s ease;
+        }
+
+        .outing:last-child { border-bottom: none; margin-bottom: 50px; }
+
+        .outing.music-playing {
+            background-color: rgba(255, 182, 193, 0.15);
+            box-shadow: 0 0 30px rgba(255, 182, 193, 0.3);
+            animation: sectionPulse 3s infinite alternate;
+            border-bottom-color: transparent;
+        }
+
+        @keyframes sectionPulse {
+            0% { box-shadow: 0 0 20px rgba(255, 182, 193, 0.2); }
+            100% { box-shadow: 0 0 40px rgba(255, 182, 193, 0.5); }
+        }
+
+        .outing-header { text-align: center; margin-bottom: 30px; }
+        .outing-header h2 { font-size: 3rem; margin-bottom: 10px; }
+        .outing-header p { font-size: 1.05rem; color: var(--text-light); max-width: 700px; margin: 0 auto 25px auto; line-height: 1.7; }
+
+        .play-btn {
+            background-color: var(--accent-color); color: white; border: none;
+            padding: 12px 24px; font-size: 1rem; font-family: 'Poppins', sans-serif;
+            border-radius: 30px; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(209, 73, 91, 0.3);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .play-btn:hover { background-color: #b53a49; transform: translateY(-3px); }
+
+        /* --- Interactive Reveal Secret Note --- */
+        .secret-note-container { text-align: center; margin: 25px 0; }
+        .note-lock {
+            background: #fff; border: 2px dashed var(--accent-color);
+            padding: 12px 25px; display: inline-block; border-radius: 50px;
+            cursor: pointer; font-weight: 600; color: var(--accent-color);
+            transition: all 0.3s ease; font-size: 0.95rem;
+        }
+
+        .note-lock:hover { background: var(--accent-color); color: white; transform: scale(1.05); }
+
+        .hidden-note {
+            max-height: 0; overflow: hidden; opacity: 0;
+            transition: max-height 0.8s ease, opacity 0.8s ease;
+            font-style: italic; color: #555; max-width: 600px;
+            margin: 0 auto; line-height: 1.6; background: #ffffff90;
+            border-radius: 10px; font-size: 0.95rem;
+        }
+
+        .hidden-note.revealed { max-height: 200px; opacity: 1; padding: 20px; margin-top: 15px; }
+
+        /* --- Flexible Polaroid Gallery --- */
+        .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 30px; }
+        
+        .polaroid {
+            background: white; padding: 12px 12px 35px 12px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: fit-content; cursor: pointer;
+        }
+
+        .polaroid img { width: 220px; height: 220px; object-fit: cover; }
+        .polaroid:nth-child(even) { transform: rotate(3deg); }
+        .polaroid:nth-child(odd) { transform: rotate(-3deg); }
+
+        .polaroid:hover { transform: scale(1.08) rotate(0deg) translateY(-10px); z-index: 5; position: relative; box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+
+        /* --- Reason Why I Love You Carousel --- */
+        .carousel-wrapper {
+            position: relative; max-width: 600px; margin: 0 auto;
+            overflow: hidden; border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(209, 73, 91, 0.15);
+            background: white;
+        }
+        .carousel { display: flex; transition: transform 0.5s ease-in-out; }
+        .carousel-card {
+            min-width: 100%; padding: 40px 30px; text-align: center;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .carousel-card h3 { font-size: 2.2rem; margin-bottom: 15px; }
+        .carousel-card p { font-size: 1.1rem; color: var(--text-light); line-height: 1.6; }
+        .carousel-controls { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        .carousel-btn {
+            background: var(--primary-color); color: white; border: none;
+            padding: 10px 20px; border-radius: 30px; cursor: pointer;
+            transition: 0.3s ease; font-family: 'Poppins', sans-serif; font-weight: 600;
+        }
+        .carousel-btn:hover { background: var(--accent-color); transform: scale(1.05); }
+
+        /* --- Video Section --- */
+        .video-container { text-align: center; margin: 0 auto; max-width: 800px; }
+        video {
+            width: 100%; border-radius: 15px; box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            outline: none; border: 5px solid white;
+        }
+
+        /* --- Grand Finale Letter --- */
+        .finale-letter { text-align: center; max-width: 800px; margin: 0 auto; padding-bottom: 40px; }
+        .finale-letter-content {
+            background: rgba(255, 255, 255, 0.7); padding: 40px;
+            border-radius: 20px; font-style: italic; line-height: 1.8;
+            font-size: 1.15rem; color: #444; border: 1px solid #ffb6c1;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.2);
+        }
+        .finale-letter-content h2 { font-size: 3.5rem; margin-bottom: 20px; }
+
+        /* --- UPGRADED Confetti Button Effects --- */
+        .confetti-btn {
+            position: relative;
+            background: linear-gradient(45deg, var(--accent-color), #ff6b81, #ff9a9e, var(--accent-color));
+            background-size: 300% 300%;
+            color: white; border: none; padding: 18px 45px;
+            font-size: 1.3rem; font-family: 'Poppins', sans-serif; font-weight: 600;
+            border-radius: 50px; cursor: pointer; margin-top: 30px;
+            box-shadow: 0 8px 20px rgba(209, 73, 91, 0.4), 0 0 15px rgba(255, 107, 129, 0.5);
+            transition: all 0.3s ease;
+            animation: gradientShift 4s ease infinite, pulseGlow 2s infinite;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* The sweeping shine effect inside the button */
+        .confetti-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: shine 3s infinite;
+            z-index: -1;
+        }
+
+        .confetti-btn:hover { 
+            transform: translateY(-5px) scale(1.05); 
+            box-shadow: 0 12px 25px rgba(209, 73, 91, 0.6), 0 0 30px rgba(255, 107, 129, 0.8); 
+            letter-spacing: 1px;
+        }
+
+        .confetti-btn:active {
+            transform: translateY(2px) scale(0.98);
+        }
+
+        /* New Keyframes for the magical button */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 8px 20px rgba(209, 73, 91, 0.4), 0 0 15px rgba(255, 107, 129, 0.3); }
+            50% { box-shadow: 0 8px 20px rgba(209, 73, 91, 0.4), 0 0 30px rgba(255, 107, 129, 0.7); }
+            100% { box-shadow: 0 8px 20px rgba(209, 73, 91, 0.4), 0 0 15px rgba(255, 107, 129, 0.3); }
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        /* --- Back to Top Button --- */
+        #backToTop {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--accent-color); color: white;
+            border: none; border-radius: 50%; width: 50px; height: 50px;
+            font-size: 1.5rem; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            opacity: 0; pointer-events: none; transition: all 0.3s ease; z-index: 100;
+        }
+        #backToTop.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        #backToTop:hover { background: #b53a49; transform: translateY(-3px); }
+
+        /* --- Lightbox --- */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .lightbox.open { opacity: 1; pointer-events: auto; }
+        .lightbox img { max-width: 90%; max-height: 80%; border: 8px solid white; border-radius: 4px; transform: scale(0.8); transition: transform 0.4s ease; }
+        .lightbox.open img { transform: scale(1); }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+
+        /* =========================================
+           RESPONSIVE DESIGN (Mobiles & Tablets)
+           ========================================= */
+        @media (max-width: 768px) {
+            .hero-photo-banner { height: 45vh; }
+            .hero-text h1 { font-size: 3.5rem; }
+            .hero-text p { font-size: 1rem; }
+            .counter-container { font-size: 0.95rem; padding: 12px 20px; }
+            
+            .outing { padding: 50px 15px; }
+            .outing-header h2 { font-size: 2.2rem; }
+            .outing-header p { font-size: 0.95rem; }
+
+            .polaroid { padding: 8px 8px 25px 8px; }
+            .polaroid img { width: 140px; height: 140px; }
+            .gallery { gap: 15px; }
+            
+            .carousel-card h3 { font-size: 1.8rem; }
+            .carousel-card p { font-size: 0.95rem; }
+            .finale-letter-content { padding: 25px; font-size: 1rem; }
+            .finale-letter-content h2 { font-size: 2.5rem; }
+            
+            /* Responsive adjustments for the Confetti Button */
+            .confetti-btn {
+                font-size: 1.1rem;
+                padding: 15px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-photo-banner { height: 40vh; }
+            .hero-text h1 { font-size: 2.8rem; }
+            .polaroid img { width: 100%; height: auto; aspect-ratio: 1/1; }
+            .polaroid { width: 100%; max-width: 280px; }
+            .gallery { flex-direction: column; align-items: center; }
+            .note-lock { font-size: 0.85rem; padding: 10px 20px;}
+            
+            /* Extra specific responsive adjustments for the Confetti Button */
+            .confetti-btn {
+                font-size: 1rem;
+                padding: 12px 20px;
+                width: 100%;
+                max-width: 280px; 
+                white-space: normal;
+            }
+        }
+    </style>
+  </head>
+  <body>
+
+    <!-- Loading Screen -->
+    <div id="loader">Gathering our best memories...</div>
+
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <header class="hero">
+      <div class="hero-photo-banner"></div>
+
+      <div class="hero-text reveal">
+        <h1>Happy Birthday, Janjounty</h1>
+        <p>
+          To my girl who makes every day better just by being in it. Today is
+          all about celebrating you.
+          Scroll down to revisit our favorite memories together.
+        </p>
+        
+        <!-- Time Together Counter -->
+        <div class="counter-container" id="timeCounter">
+          Calculating our time together...
+        </div>
+
+        <div class="scroll-down">↓</div>
+      </div>
+    </header>
+
+    <section class="outing">
+      <div class="outing-header reveal">
+        <h2>Books adventure</h2>
+        <p>I still remember exactly every detail about that day the new feelings
+          that emerged and how happy we were.
+          You shared with me what I like even if you wasn't interested in it but
+          you just liked it like me.
+          You made me love the books more and more in a way that I never had.
+          We talked until everything else around us completely disappeared. This
+          song will forever take me right back to that exact moment.</p>
+        <audio id="audio1" src="amr-diab-ne-oul-aih-mrw-dyb-nqwl-yh-128-ytshorts.savetube.me.mp3"></audio>
+        <button class="play-btn" onclick="toggleAudio('audio1', this)">🎵 Play Our Song</button>
+      </div>
+
+      <div class="secret-note-container reveal">
+        <div class="note-lock" onclick="toggleNote(this)">💝 Click to reveal a secret memory</div>
+        <div class="hidden-note">"Actually books didn't get my attention this day."</div>
+      </div>
+
+      <div class="gallery reveal">
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1303.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1289.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1282.JPG" alt="Memory 2"></div>
+      </div>
+    </section>
+
+    <section class="outing">
+      <div class="outing-header reveal">
+        <h2>The pizza date</h2>
+        <p>The feeling of this day was unforgettable. We laughed until our sides
+          hurt and made funny videos. This day I lost my sense of time. This
+          song reminds me of how much fun we had together.</p>
+        <audio id="audio2" src="ytmp3free.cc_ramy-sabry-habeena-official-lyrics-video-youtubemp3free.org.mp3"></audio>
+        <button class="play-btn" onclick="toggleAudio('audio2', this)">🎵 Play Our Song</button>
+      </div>
+
+      <div class="secret-note-container reveal">
+        <div class="note-lock" onclick="toggleNote(this)">💝 Click to reveal a secret memory</div>
+        <div class="hidden-note">"I was so excited the night before and couldn't sleep."</div>
+      </div>
+
+      <div class="gallery reveal">
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1677.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1654.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1619.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1659.JPG" alt="Memory 2"></div>
+      </div>
+    </section>
+
+    <section class="outing">
+      <div class="outing-header reveal">
+        <h2>Ramadan day</h2>
+        <p>I worried the day would be exhausting but every thing with you is
+          more easier and better. the food had a wonderful taste with you.
+          everything was so lovely and the walk was so peaceful and relaxing. I
+          could't stop thinking about this day after it ended and I just thought
+          about every moment in this day.
+          I was so lucky to have you in my life. You are a great ,pure and kind
+          person I thank god for having you in my life. I love you so much and I
+          hope we will have more days like this together.
+          You are the best Janjounty and so proud of every thing you do. I love
+          your personality your thoughts and your mind. You have the most
+          beautiful smile I have ever seen.
+          Your soul is so lovely and pure. keep smilling sweetie your are the best.
+        </p>
+        <audio id="audio3" src="amr-diab-andy-so-al-mrw-dyb-ndy-swl-128-ytshorts.savetube.me.mp3"></audio>
+        <button class="play-btn" onclick="toggleAudio('audio3', this)">🎵 Play Our Song</button>
+      </div>
+
+      <div class="secret-note-container reveal">
+        <div class="note-lock" onclick="toggleNote(this)">💝 Click to reveal a secret memory</div>
+        <div class="hidden-note">"It was so yummy iftar meal that I had with you."</div>
+      </div>
+
+      <div class="gallery reveal">
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1969.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_2070.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1977.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_1971.JPG" alt="Memory 2"></div>
+      </div>
+    </section>
+
+    <section class="outing">
+      <div class="outing-header reveal">
+        <h2>Eid Celebration</h2>
+        <p>You looked so gorgeous this day. Your outfit was perfect and you
+            looked absolutely radiant. It was my first time to go out in Eid but it will be a memory I cherish every Eid.
+            I loved the coffee time we had together and how funny we played cards. It was a surprise for me to that the color of flowers that I bought for you was the color of your shirt. Maybe it was a sign for something.
+            I loved the vibes of this day and how we laughed and enjoyed every moment together. I will never forget this day Janjounty.
+        </p>
+        <audio id="audio4" src="Ed Sheeran - Thinking Out Loud (Official Lyric Video) [Q5z6RHIpi2Y].mp3"></audio>
+        <button class="play-btn" onclick="toggleAudio('audio4', this)">🎵 Play Our Song</button>
+      </div>
+
+      <div class="secret-note-container reveal">
+        <div class="note-lock" onclick="toggleNote(this)">💝 Click to reveal a secret memory</div>
+        <div class="hidden-note">"I kept stealing glances at you while you were reading the menu. You had this little smile on your face that completely melted my heart."</div>
+      </div>
+
+      <div class="gallery reveal">
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_2393.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_2265.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_2396.JPG" alt="Memory 1"></div>    
+      </div>
+    </section>
+
+    <section class="outing">
+      <div class="outing-header reveal">
+        <h2>My Birthday</h2>
+        <p>What a day! You made me feel so special and loved. for the first time I was so happy in my birthday. every moment was deeply incredible.
+            your eyes were sparkling with joy and your smile was contagious. I loved every thing you made for me to make me happy in this day.
+            This day has been etched in my heart forever. Janjounty, you are truly my everything. Your happiness for me was insane your eyes said everything.
+            thank you for making my birthday so memorable and for being the most amazing partner I could ever ask for. I love you more than words can express.
+        </p>
+        <audio id="audio5" src="Amr Diab ... Shoft El Ayam  عمرو دياب ... شفت الأيام - Rotana.mp3"></audio>
+        <button class="play-btn" onclick="toggleAudio('audio5', this)">🎵 Play Our Song</button>
+      </div>
+
+      <div class="secret-note-container reveal">
+        <div class="note-lock" onclick="toggleNote(this)">💝 Click to reveal a secret memory</div>
+        <div class="hidden-note">"I loved the coffee taste from your lips."</div>
+      </div>
+
+      <div class="gallery reveal">
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_3165.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_3120.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_3125.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_3248.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_3324.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_3352.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_3250.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img src="Jana/IMG_3356.JPG" alt="Memory 2"></div>        
+      </div>
+    </section>
+
+    <!-- SECTION: Carousel -->
+    <section class="outing">
+        <div class="outing-header reveal">
+            <h2>Reasons Why I Love You</h2>
+            <p>I could write a million of these, but here are just a few of the things that make you so incredibly special to me.</p>
+        </div>
+        
+        <div class="carousel-wrapper reveal">
+            <div class="carousel" id="carousel">
+                <div class="carousel-card">
+                    <h3>Your Smile</h3>
+                    <p>It literally lights up my entire world. Whenever I see it, whatever stress I have disappears instantly.</p>
+                </div>
+                <div class="carousel-card">
+                    <h3>Your Pure Heart</h3>
+                    <p>You have the kindest, most beautiful soul. You care for everyone around you in such a gentle way.</p>
+                </div>
+                <div class="carousel-card">
+                    <h3>Your Mind</h3>
+                    <p>I love our deep conversations, your thoughts, and the brilliant way you look at the world.</p>
+                </div>
+                <div class="carousel-card">
+                    <h3>Your Laugh</h3>
+                    <p>Hearing you laugh is my absolute favorite sound in the world. It’s contagious and perfect.</p>
+                </div>
+                <div class="carousel-card">
+                    <h3>Your Support</h3>
+                    <p>Your words of encouragement mean everything to me. Being there for me through everything makes me more confident and strong.</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls reveal">
+            <button class="carousel-btn" onclick="moveSlide(-1)">← Previous</button>
+            <button class="carousel-btn" onclick="moveSlide(1)">Next →</button>
+        </div>
+    </section>
+
+    <!-- SECTION: Video Message -->
+    <section class="outing">
+        <div class="outing-header reveal">
+            <h2>A Special Message For You</h2>
+            <p>I recorded a little something just for your big day.</p>
+        </div>
+        <div class="video-container reveal">
+            <!-- Replace 'Jana/your-video.mp4' with your actual video file -->
+            <video controls poster="Jana/IMG_1977.JPG">
+                <source src="Jana/copy_64F511C8-97AF-4938-8447-06C4C8B84DEA.mov" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
+    <!-- SECTION: Grand Finale Letter & Confetti -->
+    <section class="outing finale-letter">
+        <div class="finale-letter-content reveal">
+            <h2>My Promise to You</h2>
+            <p>
+                Janjounty, looking back at all these memories makes me realize just how incredibly blessed I am. 
+                Every laugh we've shared, every coffee we've drank, and every walk we've taken feels like a scene from my favorite movie. 
+                You are my greatest adventure and my safest place. 
+                <br><br>
+                As you celebrate your birthday today, I just want you to know that I am so proud of the woman you are. 
+                I promise to keep choosing you every single day, to keep making you smile, and to keep making memories just like these. 
+                <br><br>
+                Happy Birthday to the love of my life. The best is yet to come.
+            </p>
+            
+            <button class="confetti-btn" onclick="triggerConfetti()">🎉 Celebrate Janjounty! 🎉</button>
+            <!-- Audio element to hold the celebration sound effect -->
+            <audio id="celebrationSound" src="Video Project 4.m4a"></audio>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+      <span class="lightbox-close">&times;</span>
+      <img id="lightbox-img" src alt="Enlarged view">
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // --- 1. Loading Screen ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.visibility = 'hidden'; }, 1000);
+        });
+
+        // --- 2. Dynamic Background Hearts ---
+        const container = document.getElementById('heartsContainer');
+        const heartSymbols = ['❤️', '💖', '💝', '💕'];
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 5) + 's'; 
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px'; 
+            container.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 9000);
+        }
+        setInterval(createHeart, 500);
+
+        // --- 3. Scroll Reveal Interaction ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(section => { observer.observe(section); });
+
+        // --- 4. Smooth Navigation & Back to Top ---
+        const backToTopBtn = document.getElementById("backToTop");
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- 5. Audio Player ---
+        let currentAudio = null;
+        let currentBtn = null;
+
+        function toggleAudio(audioId, btnElement) {
+            const audio = document.getElementById(audioId);
+            const parentSection = btnElement.closest('.outing');
+
+            if (currentAudio && currentAudio !== audio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                if (currentBtn) {
+                    currentBtn.innerHTML = "🎵 Play Our Song";
+                    currentBtn.closest('.outing').classList.remove('music-playing');
+                }
+            }
+
+            if (audio.paused) {
+                audio.play();
+                btnElement.innerHTML = "⏸ Pause Song";
+                parentSection.classList.add('music-playing');
+                currentAudio = audio;
+                currentBtn = btnElement;
+            } else {
+                audio.pause();
+                btnElement.innerHTML = "🎵 Play Our Song";
+                parentSection.classList.remove('music-playing');
+                currentAudio = null;
+                currentBtn = null;
+            }
+        }
+
+        // --- 6. Secret Note Reveal ---
+        function toggleNote(lockElement) {
+            const note = lockElement.nextElementSibling;
+            note.classList.toggle('revealed');
+            if(note.classList.contains('revealed')) {
+                lockElement.innerHTML = "✨ Our Secret Note";
+            } else {
+                lockElement.innerHTML = "💝 Click to reveal a secret memory";
+            }
+        }
+
+        // --- 7. Lightbox Image Zoom ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(polaroidElement) {
+            const imgSrc = polaroidElement.querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('open');
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('open');
+        }
+
+        // --- 8. Time Together Counter ---
+        // CHANGE THIS DATE TO YOUR ANNIVERSARY/MEETING DATE (Format: YYYY-MM-DDTHH:MM:SS)
+        const startDate = new Date("2025-10-25T00:00:00").getTime(); 
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById("timeCounter").innerHTML = 
+                `${days} Days, ${hours} Hours, ${minutes} Minutes, and ${seconds} Seconds of loving you`;
+        }, 1000);
+
+        // --- 9. Carousel Logic ---
+        let currentSlide = 0;
+        function moveSlide(step) {
+            const slides = document.querySelectorAll('.carousel-card');
+            const total = slides.length;
+            currentSlide = (currentSlide + step + total) % total;
+            document.getElementById('carousel').style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // --- 10. UPGRADED Confetti Explosion + Audio ---
+        function triggerConfetti() {
+            // Play Celebration Sound
+            const cheerSound = document.getElementById('celebrationSound');
+            if (cheerSound) {
+                cheerSound.currentTime = 0;
+                cheerSound.play().catch(e => console.log("Audio play prevented by browser:", e));
+            }
+
+            // First, a massive center burst!
+            confetti({
+                particleCount: 150,
+                spread: 180,
+                origin: { y: 0.6 },
+                colors: ['#ffb6c1', '#d1495b', '#ff6b81', '#ffffff', '#ff9a9e'],
+                disableForReducedMotion: true
+            });
+
+            // Followed by the continuous cascading confetti
+            var duration = 4 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { 
+                startVelocity: 30, 
+                spread: 360, 
+                ticks: 60, 
+                zIndex: 1000,
+                colors: ['#ffb6c1', '#d1495b', '#ff6b81', '#ffffff', '#ff9a9e'] 
+            };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+  </body>
+</html>
