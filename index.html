@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday, My Love</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet">
     
-    <!-- Canvas Confetti Library for the Confetti Button -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
 
     <style>
         /* --- Base & Responsive Variables --- */
@@ -24,7 +24,7 @@
         * { box-sizing: border-box; }
 
         html {
-            scroll-behavior: smooth; /* Smooth scrolling navigation */
+            scroll-behavior: smooth; 
         }
 
         body {
@@ -276,7 +276,6 @@
             z-index: 1;
         }
 
-        /* The sweeping shine effect inside the button */
         .confetti-btn::before {
             content: '';
             position: absolute;
@@ -298,7 +297,6 @@
             transform: translateY(2px) scale(0.98);
         }
 
-        /* New Keyframes for the magical button */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -341,9 +339,6 @@
         .lightbox.open img { transform: scale(1); }
         .lightbox-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
 
-        /* =========================================
-           RESPONSIVE DESIGN (Mobiles & Tablets)
-           ========================================= */
         @media (max-width: 768px) {
             .hero-photo-banner { height: 45vh; }
             .hero-text h1 { font-size: 3.5rem; }
@@ -363,11 +358,7 @@
             .finale-letter-content { padding: 25px; font-size: 1rem; }
             .finale-letter-content h2 { font-size: 2.5rem; }
             
-            /* Responsive adjustments for the Confetti Button */
-            .confetti-btn {
-                font-size: 1.1rem;
-                padding: 15px 30px;
-            }
+            .confetti-btn { font-size: 1.1rem; padding: 15px 30px; }
         }
 
         @media (max-width: 480px) {
@@ -378,20 +369,12 @@
             .gallery { flex-direction: column; align-items: center; }
             .note-lock { font-size: 0.85rem; padding: 10px 20px;}
             
-            /* Extra specific responsive adjustments for the Confetti Button */
-            .confetti-btn {
-                font-size: 1rem;
-                padding: 12px 20px;
-                width: 100%;
-                max-width: 280px; 
-                white-space: normal;
-            }
+            .confetti-btn { font-size: 1rem; padding: 12px 20px; width: 100%; max-width: 280px; white-space: normal; }
         }
     </style>
   </head>
   <body>
 
-    <!-- Loading Screen -->
     <div id="loader">Gathering our best memories...</div>
 
     <div class="hearts-container" id="heartsContainer"></div>
@@ -407,7 +390,6 @@
           Scroll down to revisit our favorite memories together.
         </p>
         
-        <!-- Time Together Counter -->
         <div class="counter-container" id="timeCounter">
           Calculating our time together...
         </div>
@@ -426,7 +408,7 @@
           You made me love the books more and more in a way that I never had.
           We talked until everything else around us completely disappeared. This
           song will forever take me right back to that exact moment.</p>
-        <audio id="audio1" src="amr-diab-ne-oul-aih-mrw-dyb-nqwl-yh-128-ytshorts.savetube.me.mp3"></audio>
+        <audio id="audio1" preload="none" src="amr-diab-ne-oul-aih-mrw-dyb-nqwl-yh-128-ytshorts.savetube.me.mp3"></audio>
         <button class="play-btn" onclick="toggleAudio('audio1', this)">🎵 Play Our Song</button>
       </div>
 
@@ -436,9 +418,9 @@
       </div>
 
       <div class="gallery reveal">
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1303.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1289.JPG" alt="Memory 2"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1282.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1303.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1289.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1282.JPG" alt="Memory 2"></div>
       </div>
     </section>
 
@@ -448,7 +430,7 @@
         <p>The feeling of this day was unforgettable. We laughed until our sides
           hurt and made funny videos. This day I lost my sense of time. This
           song reminds me of how much fun we had together.</p>
-        <audio id="audio2" src="ytmp3free.cc_ramy-sabry-habeena-official-lyrics-video-youtubemp3free.org.mp3"></audio>
+        <audio id="audio2" preload="none" src="ytmp3free.cc_ramy-sabry-habeena-official-lyrics-video-youtubemp3free.org.mp3"></audio>
         <button class="play-btn" onclick="toggleAudio('audio2', this)">🎵 Play Our Song</button>
       </div>
 
@@ -458,10 +440,10 @@
       </div>
 
       <div class="gallery reveal">
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1677.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1654.JPG" alt="Memory 2"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1619.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1659.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1677.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1654.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1619.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1659.JPG" alt="Memory 2"></div>
       </div>
     </section>
 
@@ -481,7 +463,7 @@
           beautiful smile I have ever seen.
           Your soul is so lovely and pure. keep smilling sweetie your are the best.
         </p>
-        <audio id="audio3" src="amr-diab-andy-so-al-mrw-dyb-ndy-swl-128-ytshorts.savetube.me.mp3"></audio>
+        <audio id="audio3" preload="none" src="amr-diab-andy-so-al-mrw-dyb-ndy-swl-128-ytshorts.savetube.me.mp3"></audio>
         <button class="play-btn" onclick="toggleAudio('audio3', this)">🎵 Play Our Song</button>
       </div>
 
@@ -491,10 +473,10 @@
       </div>
 
       <div class="gallery reveal">
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1969.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_2070.JPG" alt="Memory 2"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1977.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_1971.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1969.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_2070.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1977.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_1971.JPG" alt="Memory 2"></div>
       </div>
     </section>
 
@@ -506,7 +488,7 @@
             I loved the coffee time we had together and how funny we played cards. It was a surprise for me to that the color of flowers that I bought for you was the color of your shirt. Maybe it was a sign for something.
             I loved the vibes of this day and how we laughed and enjoyed every moment together. I will never forget this day Janjounty.
         </p>
-        <audio id="audio4" src="Ed Sheeran - Thinking Out Loud (Official Lyric Video) [Q5z6RHIpi2Y].mp3"></audio>
+        <audio id="audio4" preload="none" src="Ed Sheeran - Thinking Out Loud (Official Lyric Video) [Q5z6RHIpi2Y].mp3"></audio>
         <button class="play-btn" onclick="toggleAudio('audio4', this)">🎵 Play Our Song</button>
       </div>
 
@@ -516,9 +498,9 @@
       </div>
 
       <div class="gallery reveal">
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_2393.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_2265.JPG" alt="Memory 2"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_2396.JPG" alt="Memory 1"></div>    
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_2393.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_2265.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_2396.JPG" alt="Memory 1"></div>    
       </div>
     </section>
 
@@ -530,7 +512,7 @@
             This day has been etched in my heart forever. Janjounty, you are truly my everything. Your happiness for me was insane your eyes said everything.
             thank you for making my birthday so memorable and for being the most amazing partner I could ever ask for. I love you more than words can express.
         </p>
-        <audio id="audio5" src="Amr Diab ... Shoft El Ayam  عمرو دياب ... شفت الأيام - Rotana.mp3"></audio>
+        <audio id="audio5" preload="none" src="Amr Diab ... Shoft El Ayam  عمرو دياب ... شفت الأيام - Rotana.mp3"></audio>
         <button class="play-btn" onclick="toggleAudio('audio5', this)">🎵 Play Our Song</button>
       </div>
 
@@ -540,18 +522,17 @@
       </div>
 
       <div class="gallery reveal">
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_3165.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_3120.JPG" alt="Memory 2"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_3125.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_3248.JPG" alt="Memory 2"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_3324.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_3352.JPG" alt="Memory 2"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_3250.JPG" alt="Memory 1"></div>
-        <div class="polaroid" onclick="openLightbox(this)"><img src="IMG_3356.JPG" alt="Memory 2"></div>        
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_3165.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_3120.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_3125.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_3248.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_3324.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_3352.JPG" alt="Memory 2"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_3250.JPG" alt="Memory 1"></div>
+        <div class="polaroid" onclick="openLightbox(this)"><img loading="lazy" src="IMG_3356.JPG" alt="Memory 2"></div>        
       </div>
     </section>
 
-    <!-- SECTION: Carousel -->
     <section class="outing">
         <div class="outing-header reveal">
             <h2>Reasons Why I Love You</h2>
@@ -588,22 +569,19 @@
         </div>
     </section>
 
-    <!-- SECTION: Video Message -->
     <section class="outing">
         <div class="outing-header reveal">
             <h2>A Special Message For You</h2>
             <p>I recorded a little something just for your big day.</p>
         </div>
         <div class="video-container reveal">
-            <!-- Replace 'Jana/your-video.mp4' with your actual video file -->
-            <video controls poster="IMG_1977.JPG">
-                <source src="copy_64F511C8-97AF-4938-8447-06C4C8B84DEA.mov" type="video/mp4">
+            <video controls preload="none" poster="IMG_1977.JPG">
+                <source src="videooooooooo.mov" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
     </section>
 
-    <!-- SECTION: Grand Finale Letter & Confetti -->
     <section class="outing finale-letter">
         <div class="finale-letter-content reveal">
             <h2>My Promise to You</h2>
@@ -619,29 +597,24 @@
             </p>
             
             <button class="confetti-btn" onclick="triggerConfetti()">🎉 Celebrate Janjounty! 🎉</button>
-            <!-- Audio element to hold the celebration sound effect -->
-            <audio id="celebrationSound" src="Video Project 4.m4a"></audio>
+            <audio id="celebrationSound" preload="none" src="Video Project 4.m4a"></audio>
         </div>
     </section>
 
-    <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
       <span class="lightbox-close">&times;</span>
       <img id="lightbox-img" src alt="Enlarged view">
     </div>
 
-    <!-- Back to Top Button -->
     <button id="backToTop" onclick="scrollToTop()">↑</button>
 
     <script>
-        // --- 1. Loading Screen ---
         window.addEventListener('load', () => {
             const loader = document.getElementById('loader');
             loader.style.opacity = '0';
             setTimeout(() => { loader.style.visibility = 'hidden'; }, 1000);
         });
 
-        // --- 2. Dynamic Background Hearts ---
         const container = document.getElementById('heartsContainer');
         const heartSymbols = ['❤️', '💖', '💝', '💕'];
         
@@ -657,7 +630,6 @@
         }
         setInterval(createHeart, 500);
 
-        // --- 3. Scroll Reveal Interaction ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
@@ -668,7 +640,6 @@
 
         document.querySelectorAll('.reveal').forEach(section => { observer.observe(section); });
 
-        // --- 4. Smooth Navigation & Back to Top ---
         const backToTopBtn = document.getElementById("backToTop");
         window.addEventListener('scroll', () => {
             if (window.scrollY > 600) {
@@ -682,7 +653,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- 5. Audio Player ---
         let currentAudio = null;
         let currentBtn = null;
 
@@ -714,7 +684,6 @@
             }
         }
 
-        // --- 6. Secret Note Reveal ---
         function toggleNote(lockElement) {
             const note = lockElement.nextElementSibling;
             note.classList.toggle('revealed');
@@ -725,7 +694,6 @@
             }
         }
 
-        // --- 7. Lightbox Image Zoom ---
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
@@ -739,8 +707,6 @@
             lightbox.classList.remove('open');
         }
 
-        // --- 8. Time Together Counter ---
-        // CHANGE THIS DATE TO YOUR ANNIVERSARY/MEETING DATE (Format: YYYY-MM-DDTHH:MM:SS)
         const startDate = new Date("2025-10-25T00:00:00").getTime(); 
 
         setInterval(() => {
@@ -756,7 +722,6 @@
                 `${days} Days, ${hours} Hours, ${minutes} Minutes, and ${seconds} Seconds of loving you`;
         }, 1000);
 
-        // --- 9. Carousel Logic ---
         let currentSlide = 0;
         function moveSlide(step) {
             const slides = document.querySelectorAll('.carousel-card');
@@ -765,16 +730,13 @@
             document.getElementById('carousel').style.transform = `translateX(-${currentSlide * 100}%)`;
         }
 
-        // --- 10. UPGRADED Confetti Explosion + Audio ---
         function triggerConfetti() {
-            // Play Celebration Sound
             const cheerSound = document.getElementById('celebrationSound');
             if (cheerSound) {
                 cheerSound.currentTime = 0;
                 cheerSound.play().catch(e => console.log("Audio play prevented by browser:", e));
             }
 
-            // First, a massive center burst!
             confetti({
                 particleCount: 150,
                 spread: 180,
@@ -783,7 +745,6 @@
                 disableForReducedMotion: true
             });
 
-            // Followed by the continuous cascading confetti
             var duration = 4 * 1000;
             var animationEnd = Date.now() + duration;
             var defaults = { 
